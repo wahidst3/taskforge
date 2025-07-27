@@ -121,7 +121,7 @@ export default function Hero({ onGenerate, isLoading }) {
       <div className="relative z-10 max-w-3xl w-full text-center space-y-10">
         {/* Heading with new font style */}
         <div className="space-y-6">
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-slate-800 tracking-tight font-[Inter]">
+          <h1 className="text-5xl sm:text-6xl mt-3 lg:text-7xl font-bold text-slate-800 tracking-tight font-[Inter]">
             Transform <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-pink-500">Text to Tasks</span>
           </h1>
           
@@ -158,7 +158,7 @@ export default function Hero({ onGenerate, isLoading }) {
             <button
               onClick={handleGenerate}
               disabled={!text.trim() || isLoading}
-              className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-5 py-3.5 text-lg font-semibold text-white shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 group"
+              className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-5 py-3.5 text-lg font-semibold text-white shadow-md hover:shadow-lg cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 group"
             >
               {isLoading ? (
                 'Processing...'

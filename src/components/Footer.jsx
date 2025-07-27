@@ -53,7 +53,7 @@ export default function AppFooter() {
           <div className="flex space-x-4 mt-6">
             {/* LinkedIn */}
             <a
-              href="https://linkedin.com/in/your-username"
+              href="https://www.linkedin.com/in/wahid-ali-467855235/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
@@ -68,7 +68,7 @@ export default function AppFooter() {
 
             {/* Portfolio */}
             <a
-              href="https://yourportfolio.com"
+              href="https://github.com/wahidst3"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Portfolio"
