@@ -7,7 +7,7 @@ import { extractListFromParagraph } from "../utilis/gemini";
 import { ClipLoader } from "react-spinners";
 import TrustBadges from './Badge';
 import HowItWorks from './Howitworks';
-import AboutSection from './about';
+import AboutSection from './About';
 import AppFooter from './Footer';
 import GlassNavbar from './Nav';
 import Feedback from './Feedback';
