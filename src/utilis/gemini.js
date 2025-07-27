@@ -1,5 +1,85 @@
-// gemini.js
-const API_KEY = import.meta.env.VITE_GEMINI_KEY;
+// // gemini.js
+// const API_KEY = import.meta.env.VITE_GEMINI_KEY;
+
+// const SYSTEM_PROMPT = `
+// You are a task extractor.  
+// Return ONLY valid JSON with the following structure:
+
+// [
+//   {
+//     "id": "taskify-anyrandom-id",
+//     "title": "Short title",
+//     "description": "One-line summary of the paragraph",
+//     "createdAt": "2024-07-27T12:00:00Z",
+//     "tags": ["tag1","tag2"],
+//     "tasks": [
+//       {
+//         "id": "t-1",
+//         "title": "Wake up at 5 am",
+//         "description": "",
+//         "status": "To-Do"
+//       },
+//       {
+//         "id": "t-2",
+//         "title": "Solve LeetCode array duplicate problem",
+//         "description": "",
+//         "status": "To-Do"
+//       },
+//       {
+//         "id": "t-3",
+//         "title": "Plan startup tasks",
+//         "description": "",
+//         "status": "To-Do"
+//       }
+//     ]
+//   }
+// ]
+
+// Rules:
+// 1. Every task must have a unique id (simple slug is fine, e.g. "t-1", "t-2").  
+// 2. Default status for all tasks is "To-Do" unless the text explicitly says otherwise ("in progress", "done", etc.).  
+// 3. Keep descriptions short; omit if empty.  
+// 4. Do NOT wrap the JSON in markdown backticks.
+// `;
+
+// export async function extractListFromParagraph(paragraph) {
+//   const payload = {
+//     contents: [
+//       {
+//         parts: [
+//           { text: SYSTEM_PROMPT },
+//           { text: paragraph },
+//         ],
+//       },
+//     ],
+//   };
+
+//   const res = await fetch(
+//     `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`,
+//     {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify(payload),
+//     }
+//   );
+
+//   if (!res.ok) {
+//     const err = await res.text();
+//     throw new Error(`Gemini error ${res.status}: ${err}`);
+//   }
+
+//   const data = await res.json();
+//   const raw = data.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
+
+//   // Gemini sometimes wraps in ```json … ```
+//   const jsonStr = raw.replace(/```(?:json)?/g, "").trim();
+//   return JSON.parse(jsonStr);   // <- returns the array
+// }
+
+//cohore
+// cohere.js
+
+const API_KEY = import.meta.env.VITE_COHERE_KEY;
 
 const SYSTEM_PROMPT = `
 You are a task extractor.  
@@ -43,35 +123,35 @@ Rules:
 `;
 
 export async function extractListFromParagraph(paragraph) {
-  const payload = {
-    contents: [
-      {
-        parts: [
-          { text: SYSTEM_PROMPT },
-          { text: paragraph },
-        ],
-      },
-    ],
-  };
+  const response = await fetch('https://api.cohere.ai/v1/chat', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: 'command-r-plus',
+      temperature: 0.3,
+      chat_history: [],
+      message: paragraph,
+      preamble: SYSTEM_PROMPT,
+    }),
+  });
 
-  const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    }
-  );
-
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`Gemini error ${res.status}: ${err}`);
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Cohere error ${response.status}: ${errorText}`);
   }
 
-  const data = await res.json();
-  const raw = data.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
+  const data = await response.json();
+  const raw = data.text ?? '';
 
-  // Gemini sometimes wraps in ```json … ```
-  const jsonStr = raw.replace(/```(?:json)?/g, "").trim();
-  return JSON.parse(jsonStr);   // <- returns the array
+  // Remove markdown wrapping (```json ... ```)
+  const jsonStr = raw.replace(/```(?:json)?/g, '').replace(/```/g, '').trim();
+
+  try {
+    return JSON.parse(jsonStr);
+  } catch (err) {
+    throw new Error(`Failed to parse JSON from Cohere response:\n${jsonStr}`);
+  }
 }
