@@ -202,19 +202,19 @@ function ListCard({ list, deleteList }) {
   return (
     <div className="group relative">
       {/* Delete Button */}
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          if (window.confirm('Are you sure you want to delete this board?')) {
-            deleteList(list.id);
-          }
-        }}
-        className="absolute -top-3 -right-3 z-10 bg-white rounded-full p-2 shadow-md hover:bg-red-50 transition-colors opacity-0 group-hover:opacity-100"
-        aria-label="Delete board"
-      >
-        <TrashIcon className="w-5 h-5 text-red-500" />
-      </button>
+ <button
+  onClick={(e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (window.confirm('Are you sure you want to delete this board?')) {
+      deleteList(list.id);
+    }
+  }}
+  className="absolute -top-3 -right-3 z-10 bg-white rounded-full p-2 shadow-md hover:bg-red-50 transition-colors opacity-100 md:opacity-0 md:group-hover:opacity-100"
+  aria-label="Delete board"
+>
+  <TrashIcon className="w-5 h-5 text-red-500" />
+</button>
       
       <Link
         to={`/board/${list.id}`}
