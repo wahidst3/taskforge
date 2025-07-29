@@ -7,7 +7,7 @@
 
 // [
 //   {
-//     "id": "taskify-anyrandom-id",
+//     "id": "taskify-id must be unique with numbers and letters",
 //     "title": "Short title",
 //     "description": "One-line summary of the paragraph",
 //     "createdAt": "2024-07-27T12:00:00Z",
@@ -87,7 +87,7 @@ Return ONLY valid JSON with the following structure:
 
 [
   {
-    "id": "taskify-anyrandom-id",
+    "id": "random-id",
     "title": "Short title",
     "description": "One-line summary of the paragraph",
     "createdAt": "2024-07-27T12:00:00Z",
@@ -116,10 +116,11 @@ Return ONLY valid JSON with the following structure:
 ]
 
 Rules:
-1. Every task must have a unique id (simple slug is fine, e.g. "t-1", "t-2").  
-2. Default status for all tasks is "To-Do" unless the text explicitly says otherwise ("in progress", "done", etc.).  
-3. Keep descriptions short; omit if empty.  
-4. Do NOT wrap the JSON in markdown backticks.
+1.  list must have a unique id (simple slug is fine, e.g. "taskify-anyrandomnumber", "taskify-anyrandomnumber").
+2. Every task must have a unique id (simple slug is fine, e.g. "t-1", "t-2").  
+3. Default status for all tasks is "To-Do" unless the text explicitly says otherwise ("in progress", "done", etc.).  
+5. Keep descriptions short; omit if empty.  
+5. Do NOT wrap the JSON in markdown backticks.
 `;
 
 export async function extractListFromParagraph(paragraph) {

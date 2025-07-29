@@ -69,7 +69,7 @@ import { useState, useEffect } from "react";
 import { ArrowRightIcon, SparklesIcon } from "@heroicons/react/24/solid";
 import { ClipboardDocumentIcon, LightBulbIcon } from "@heroicons/react/24/outline";
 
-export default function Hero({ onGenerate, isLoading }) {
+export default function Hero({ onGenerate, isLoading}) {
   const [text, setText] = useState("");
   const [showExample, setShowExample] = useState(false);
 
@@ -87,6 +87,7 @@ export default function Hero({ onGenerate, isLoading }) {
   }, [text]);
 
   const handleGenerate = () => {
+    
     onGenerate(text);
     // Don't clear text so user can reference it
   };

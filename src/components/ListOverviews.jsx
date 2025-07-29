@@ -126,8 +126,9 @@ import {
   TagIcon
 } from "@heroicons/react/24/outline";
 import { SparklesIcon } from "@heroicons/react/24/solid";
+import { forwardRef } from "react";
 
-export default function ListsOverview({ lists, setLists }) {
+const ListsOverview = forwardRef(({ lists, setLists }, ref) =>  {
   const navigate = useNavigate();
 
   const deleteList = (listId) => {
@@ -139,7 +140,7 @@ export default function ListsOverview({ lists, setLists }) {
   if (!lists?.length) return <EmptyState />;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" ref={ref}>
       {/* Enhanced Header */}
       <header className="mb-12">
         <div className="flex items-center justify-between">
@@ -153,21 +154,20 @@ export default function ListsOverview({ lists, setLists }) {
             </p>
           </div>
         <Link
-  to="/" // Navigate to home page first
-  onClick={(e) => {
-    // Only prevent default if we're already on home page
-    if (window.location.pathname === '/') {
-      e.preventDefault();
-      const heroElement = document.getElementById('hero');
-      if (heroElement) {
-        heroElement.scrollIntoView({ 
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-    }
-    // Otherwise, let the Link navigate to home page normally
-  }}
+   to={{ pathname: "/", state: { scrollTo: "hero" } }}
+// onClick={(e) => {
+//   if (window.location.pathname === '/') {
+//     e.preventDefault(); // 🔹 Stop page reload if already on home
+//     const heroElement = document.getElementById('hero');
+//     if (heroElement) {
+//       heroElement.scrollIntoView({
+//         behavior: 'smooth',
+//         block: 'start'
+//       });
+//     }
+//   }
+//   // If not on homepage, let normal navigation happen (e.g., via <Link to="/" />)
+// }}
   className="hidden sm:flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 text-white font-medium hover:shadow-lg transition-all group"
 >
   <PlusIcon className="w-5 h-5 group-hover:scale-110 transition-transform" />
@@ -197,6 +197,9 @@ export default function ListsOverview({ lists, setLists }) {
     </div>
   );
 }
+);
+
+export default ListsOverview;
 
 function ListCard({ list, deleteList }) {
   return (
