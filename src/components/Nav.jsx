@@ -29,7 +29,7 @@ export default function GlassNavbar() {
     }
     // Otherwise, let the Link navigate to home page normally
   }}
-            className="flex items-center gap-1.5 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 px-5 py-2.5 text-white font-medium hover:shadow-lg transition-all hover:scale-[1.02]"
+            className="flex items-center gap-1.5 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 px-5 py-2 text-white font-medium hover:shadow-lg transition-all hover:scale-[1.02]"
           >
             Get Started
             <ArrowRightIcon className="w-4 h-4" />

@@ -80,6 +80,9 @@
 // cohere.js
 
 const API_KEY = import.meta.env.VITE_COHERE_KEY;
+function generateUniqueId() {
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 8)}-taskify`;
+}
 
 const SYSTEM_PROMPT = `
 You are a task extractor.  
@@ -87,7 +90,7 @@ Return ONLY valid JSON with the following structure:
 
 [
   {
-    "id": "random-id",
+    "id": "${generateUniqueId()}",
     "title": "Short title",
     "description": "One-line summary of the paragraph",
     "createdAt": "2024-07-27T12:00:00Z",
@@ -95,19 +98,19 @@ Return ONLY valid JSON with the following structure:
     "tasks": [
       {
         "id": "t-1",
-        "title": "Wake up at 5 am",
+        "title": "Wake up at 5 am short title",
         "description": "",
         "status": "To-Do"
       },
       {
         "id": "t-2",
-        "title": "Solve LeetCode array duplicate problem",
+        "title": "Solve LeetCode array duplicate problem short title",
         "description": "",
         "status": "To-Do"
       },
       {
         "id": "t-3",
-        "title": "Plan startup tasks",
+        "title": "Plan startup tasks short title",
         "description": "",
         "status": "To-Do"
       }
@@ -116,10 +119,10 @@ Return ONLY valid JSON with the following structure:
 ]
 
 Rules:
-1.  list must have a unique id (simple slug is fine, e.g. "taskify-anyrandomnumber", "taskify-anyrandomnumber").
+1.  Each task must be clear and to the point .
 2. Every task must have a unique id (simple slug is fine, e.g. "t-1", "t-2").  
 3. Default status for all tasks is "To-Do" unless the text explicitly says otherwise ("in progress", "done", etc.).  
-5. Keep descriptions short; omit if empty.  
+5. Keep descriptions short but meaningful and productive; omit if empty.  
 5. Do NOT wrap the JSON in markdown backticks.
 `;
 
