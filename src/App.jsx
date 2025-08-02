@@ -9,7 +9,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import BoardPage from "./components/Board.jsx";
 import Home from './components/Home.jsx'
-
+import Dashboard from './components/Dashboard.jsx';
 function App() {
 
   
@@ -22,6 +22,7 @@ function App() {
   <Routes>
     
      <Route path="/" element={ <Home/>} />
+     <Route path="/ds" element={ <Dashboard/>} />
      <Route path="/board/:listId" element={<BoardPage />} />
     </Routes>
   </div>   
