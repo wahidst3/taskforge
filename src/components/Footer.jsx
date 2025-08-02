@@ -46,7 +46,7 @@ export default function AppFooter() {
     <footer className="bg-slate-900 text-white py-12">
       <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-4 gap-8">
         <div>
-          <h3 className="text-lg font-semibold mb-4">TaskForge</h3>
+        <div className="flex items-center h-10"> <img src="/vite.svg" className="h-8 w-8 mr-2 "alt="" /> <h3 className="text-lg font-semibold ">TaskForge</h3></div> 
           <p className="text-slate-400">AI-powered task extraction</p>
 
           {/* Social Links */}
