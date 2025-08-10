@@ -93,7 +93,7 @@ export default function Hero({ onGenerate, isLoading}) {
           <textarea
             id="input-text"
             rows={5}
-            className="w-full resize-none rounded-xl outline-none p-4 border border-slate-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition font-[Inter] text-slate-700"
+            className="w-full resize-none rounded-xl outline-none p-4 border border-slate-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition text-lg font-[Inter] text-slate-700"
             placeholder="Meeting notes, emails, brain dumps..."
             value={text}
             onChange={(e) => setText(e.target.value)}

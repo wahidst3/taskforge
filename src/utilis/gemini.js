@@ -93,7 +93,7 @@ Return ONLY valid JSON with the following structure:
     "id": "${generateUniqueId()}",
     "title": " title at least 4 words",
     "description": "One-line summary of the paragraph",
-    "createdAt": "2024-07-27T12:00:00Z",
+    "createdAt": "today's date in ISO format",
     "tags": ["tag1","tag2"],
     "tasks": [
     {

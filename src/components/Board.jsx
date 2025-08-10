@@ -214,6 +214,12 @@ const openEditPopup = (id) => {
         </div>
         
       </header> */}
+      {/* <div className='max-w-7xl mx-auto px-4 py-1'>
+        <Link to="/" className="flex items-center gap-2 text-xl  hover:text-slate-600 text-slate-100 hover:bg-gray-200/70 bg-gray-300/70 w-9 h-9 text-center rounded-full p-1 transition">
+            <ArrowLeftIcon className="w-7 h-7" />
+      
+          </Link>
+      </div> */}
 
       
 
@@ -308,7 +314,7 @@ function Column({ id, title, tasks, deleteTask , editPopup, setEditPopup, openEd
 
     <div className={`bg-white rounded-xl p-4 border-t-4 ${color} shadow-sm`}>
       <div className="flex items-center justify-between mb-4 w-full">
-      <h2 className="font-semibold text-slate-700 mb-3 text-lg">{title}</h2>
+      <h1 className="font-semibold text-slate-700 mb-3 text-lg">{title}</h1>
       <FilterIcon className="w-6 h-6 text-slate-300 cursor-pointer hover:text-slate-700 transition"
       onClick={() => alert('Filter functionality coming soon!')}
       />
