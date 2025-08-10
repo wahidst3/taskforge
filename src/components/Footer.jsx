@@ -87,7 +87,7 @@ export default function AppFooter() {
         <FooterColumn title="Product" links={['Features', 'Pricing', 'Integrations']} />
 
         {/* Resources */}
-        <FooterColumn title="Resources" links={['Docs', 'Tutorials', 'Blog']} />
+        {/* <FooterColumn title="Resources" links={['Docs', 'Tutorials', 'Blog']} /> */}
 
         {/* Company */}
         <FooterColumn title="Company" links={['About', 'Careers', 'Contact']} />

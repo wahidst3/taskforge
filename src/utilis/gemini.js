@@ -91,29 +91,47 @@ Return ONLY valid JSON with the following structure:
 [
   {
     "id": "${generateUniqueId()}",
-    "title": "Short title",
+    "title": " title at least 4 words",
     "description": "One-line summary of the paragraph",
     "createdAt": "2024-07-27T12:00:00Z",
     "tags": ["tag1","tag2"],
     "tasks": [
-      {
-        "id": "t-1",
-        "title": "Wake up at 5 am short title",
-        "description": "",
-        "status": "To-Do"
-      },
-      {
-        "id": "t-2",
-        "title": "Solve LeetCode array duplicate problem short title",
-        "description": "",
-        "status": "To-Do"
-      },
-      {
-        "id": "t-3",
-        "title": "Plan startup tasks short title",
-        "description": "",
-        "status": "To-Do"
-      }
+    {
+  "id": "t-1",
+  "title": "Short title 3 words only", 
+  "description": "Detailed explanation of the task, including any relevant links or notes.",
+  "status": "To-Do",                // or "In-Progress", "Done"
+  "priority": "high",               // low, medium, high
+  "dueDate": "2025-08-12",          // ISO date format
+  "createdAt": "2025-08-09T10:00:00Z",
+  "updatedAt": "2025-08-09T10:00:00Z",
+  "tags": ["frontend", "UI"],       // easy filtering/search
+ 
+},
+       {
+  "id": "t-2",
+  "title": "Short title 3 words only", 
+  "description": "Detailed explanation of the task, including any relevant links or notes.",
+  "status": "To-Do",                // or "In-Progress", "Done"
+  "priority": "high",               // low, medium, high
+  "dueDate": "2025-08-12",          // ISO date format
+  "createdAt": "2025-08-09T10:00:00Z",
+  "updatedAt": "2025-08-09T10:00:00Z",
+  "tags": ["frontend", "UI"],       // easy filtering/search
+ 
+},
+       {
+  "id": "t-3",
+  "title": "Short title 3 words only", 
+  "description": "Detailed explanation of the task, including any relevant links or notes.",
+  "status": "To-Do",                // or "In-Progress", "Done"
+  "priority": "high",               // low, medium, high
+  "dueDate": "2025-08-12",          // ISO date format
+  "createdAt": "2025-08-09T10:00:00Z",
+  "updatedAt": "2025-08-09T10:00:00Z",
+  "tags": ["frontend", "UI"],       // easy filtering/search
+ 
+},
     ]
   }
 ]
@@ -122,8 +140,12 @@ Rules:
 1.  Each task must be clear and to the point .
 2. Every task must have a unique id (simple slug is fine, e.g. "t-1", "t-2").  
 3. Default status for all tasks is "To-Do" unless the text explicitly says otherwise ("in progress", "done", etc.).  
-5. Keep descriptions short but meaningful and productive; omit if empty.  
-5. Do NOT wrap the JSON in markdown backticks.
+5. Keep descriptions short but meaningful and productive (no longer than 9 words); omit if empty.  
+6. Use ISO date format for dates (e.g., "2024-07-27T12:00:00Z").
+7. Use tags to categorize tasks (e.g., ["frontend", "UI"]).
+8. Use priority to prioritize tasks (e.g., "high", "medium", "low").
+9. Do NOT wrap the JSON in markdown backticks.
+
 `;
 
 export async function extractListFromParagraph(paragraph) {

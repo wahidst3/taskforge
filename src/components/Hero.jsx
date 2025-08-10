@@ -1,70 +1,4 @@
-// // Hero.jsx
-// import { useState } from "react";
-// import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
-// export default function Hero({ onGenerate }) {
-//   const [text, setText] = useState("");
-
-//   return (
-//     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-slate-50 to-sky-100 flex flex-col items-center justify-center px-4 py-16 sm:px-6 lg:px-8">
-//       {/* Subtle animated blob behind the card */}
-//       <div className="absolute inset-0 overflow-hidden -z-0">
-//         <div className="blob absolute -top-40 -left-40 w-96 h-96 bg-sky-300/30 rounded-full blur-3xl animate-pulse" />
-//         <div className="blob absolute -bottom-40 -right-40 w-96 h-96 bg-amber-300/30 rounded-full blur-3xl animate-pulse [animation-delay:2s]" />
-//       </div>
-
-//       <div className="relative z-10 max-w-3xl w-full text-center space-y-10">
-//         {/* Heading */}
-//         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight">
-//           From messy paragraph to
-//           <span className="text-sky-600"> crystal-clear tasks</span>
-//         </h1>
-
-//         {/* Sub-heading */}
-//         <p className="max-w-xl mx-auto text-lg text-slate-600">
-//           Paste any wall of text—emails, meeting notes, brain dumps—and watch AI
-//           extract tasks, deadlines, and categories in seconds.
-//         </p>
-
-//         {/* Input card */}
-//         <div className="bg-white/80 backdrop-blur-md border border-slate-200 rounded-2xl shadow-xl p-6 space-y-4">
-//           <textarea
-//             rows={4}
-//             className="w-full resize-none rounded-lg outline-0 p-2 border-slate-300 focus:border-sky-500 focus:ring-2 focus:ring-sky-500 transition"
-//             placeholder="Type or paste your paragraph here..."
-//             value={text}
-//             onChange={(e) => setText(e.target.value)}
-//           />
-//           <button
-//             onClick={() => {onGenerate(text) ,setText("")}}
-//             disabled={!text.trim()}
-//             className="w-full flex items-center justify-center gap-2 rounded-lg bg-sky-600 px-5 py-3 text-lg font-semibold text-white shadow-md hover:bg-sky-700 disabled:bg-sky-300 disabled:cursor-not-allowed transition-all duration-200 group"
-//           >
-//             Generate my list
-//             <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-//           </button>
-//         </div>
-
-//         {/* Micro-testimonials / trust row */}
-//         <div className="flex items-center justify-center gap-6 text-sm text-slate-500">
-//           <span className="flex items-center gap-1">
-//             <span className="inline-block w-2 h-2 bg-green-500 rounded-full" />
-//             Free to start
-//           </span>
-//           <span className="flex items-center gap-1">
-//             <span className="inline-block w-2 h-2 bg-green-500 rounded-full" />
-//             No credit card
-//           </span>
-//           <span className="flex items-center gap-1">
-//             <span className="inline-block w-2 h-2 bg-green-500 rounded-full" />
-//             2 000+ happy users
-//           </span>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-// Hero.jsx
 import { useState, useEffect } from "react";
 import { ArrowRightIcon, SparklesIcon } from "@heroicons/react/24/solid";
 import { ClipboardDocumentIcon, LightBulbIcon } from "@heroicons/react/24/outline";
@@ -103,7 +37,7 @@ export default function Hero({ onGenerate, isLoading}) {
   };
 
   return (
-    <div id="hero" className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 flex flex-col items-center justify-center px-4 py-16 sm:px-6 lg:px-8 overflow-hidden relative">
+ <section id="hero" aria-label="AI Task Extraction Tool" className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 flex flex-col items-center justify-center px-4 py-16 sm:px-6 lg:px-8 overflow-hidden relative">
       {/* Decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Floating abstract shapes */}
@@ -122,17 +56,27 @@ export default function Hero({ onGenerate, isLoading}) {
       <div className="relative z-10 max-w-3xl w-full text-center space-y-10">
         {/* Heading with new font style */}
         <div className="space-y-6">
-          <h1 className="text-5xl sm:text-6xl mt-3 lg:text-7xl font-bold text-slate-800 tracking-tight font-[Inter]">
-            Transform <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-pink-500">Text to Tasks</span>
-          </h1>
+
+        <h1 className="text-4xl md:text-4xl mt-3 lg:text-5xl font-bold text-slate-800 tracking-tight font-[Inter]">
+  AI Tool to Extract <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-pink-500">Actionable Tasks</span> from  <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-pink-500">Any Text.</span> TaskForge
+</h1>
+
+         
           
           {/* Sub-heading */}
-          <p className="max-w-xl mx-auto text-xl text-slate-600 font-medium">
+          {/* <p className="max-w-xl mx-auto text-xl text-slate-600 font-medium">
             AI-powered extraction of actionable items from any text
             <span className="inline-block ml-2">
               <SparklesIcon className="w-5 h-5 text-amber-400" />
             </span>
-          </p>
+          </p> */}
+          <p className="max-w-xl mx-auto sm:text-lg text-lg lg:text-xl text-slate-600 font-medium ">
+  Quickly turn meeting notes, emails, and documents into an organized to-do list using AI-powered task extraction.
+  <span className="inline-block ml-2">
+    <SparklesIcon className="w-5 h-5 text-amber-400" />
+  </span>
+</p>
+
         </div>
 
         {/* Input card */}
@@ -220,6 +164,6 @@ export default function Hero({ onGenerate, isLoading}) {
         .animate-float2 { animation: float2 10s ease-in-out infinite; }
         .animate-float3 { animation: float3 7s ease-in-out infinite; }
       `}</style>
-    </div>
+    </section>
   );
 }
