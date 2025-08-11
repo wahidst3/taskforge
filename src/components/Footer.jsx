@@ -41,6 +41,7 @@
 //     </div>
 //   );
 // }
+import { Link } from "react-router-dom";
 export default function AppFooter() {
   return (
     <footer className="bg-slate-900 text-white py-12">
@@ -84,13 +85,13 @@ export default function AppFooter() {
         </div>
 
         {/* Product Links */}
-        <FooterColumn title="Product" links={['Features', 'Pricing', 'Integrations']} />
+        <FooterColumn title="Product" links={['Features', 'Pricing']} />
 
         {/* Resources */}
         {/* <FooterColumn title="Resources" links={['Docs', 'Tutorials', 'Blog']} /> */}
 
         {/* Company */}
-        <FooterColumn title="Company" links={['About', 'Careers', 'Contact']} />
+        <FooterColumn title="Company" links={['About',  'Contact']} />
       </div>
 
       {/* Bottom Line */}
@@ -112,9 +113,9 @@ function FooterColumn({ title, links }) {
       <ul className="space-y-2">
         {links.map((link, index) => (
           <li key={index}>
-            <a href="#" className="text-slate-400 hover:text-white transition-colors">
+            <Link to={`/${link.toLowerCase()}`} className="text-slate-400 hover:text-white transition-colors">
               {link}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

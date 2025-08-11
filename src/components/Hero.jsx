@@ -2,16 +2,71 @@
 import { useState, useEffect } from "react";
 import { ArrowRightIcon, SparklesIcon } from "@heroicons/react/24/solid";
 import { ClipboardDocumentIcon, LightBulbIcon } from "@heroicons/react/24/outline";
+import Guest from "./Guest";
+import { auth } from "../utilis/firebase";
+import { ToastContainer, toast } from "react-toastify";
+import { signInAsGuest } from "../utilis/firebase";
+// import { UserIcon, SparklesIcon } from "@heroicons/react/24/solid";
+import { getFirestore, doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { useLocation } from "react-router-dom";
+// import { auth } from "../utilis/firebase";
+
+
+const db = getFirestore();
+
+export const saveGuestUser = async () => {
+  const user = auth.currentUser;
+  if (!user) return;
+
+  const userRef = doc(db, "users", user.uid);
+  await setDoc(userRef, {
+    uid: user.uid,
+    isGuest: true,
+    lists: [],
+    listsCount: 0,
+    createdAt: serverTimestamp(),
+    lastLogin: serverTimestamp()
+  }, { merge: true });
+};
 
 export default function Hero({ onGenerate, isLoading}) {
+  const [progress, setProgress] = useState(0);
+
+  
   const [text, setText] = useState("");
   const [showExample, setShowExample] = useState(false);
+    const [showGuestLogin, setShowGuestLogin] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  // Load saved text from localStorage
+ useEffect(() => {
+    let interval;
+    if (isLoading) {
+      setProgress(0); // reset on start
+      interval = setInterval(() => {
+        setProgress((prev) => {
+          // stop at 95% so it can jump to 100% when done
+          if (prev < 95) return prev + 1;
+          return prev;
+        });
+      }, 200); // speed of progress increase
+    } else {
+      setProgress(100); // complete when finished
+      setTimeout(() => setProgress(0), 500); // reset after short delay
+    }
+    return () => clearInterval(interval);
+  }, [isLoading]);
   useEffect(() => {
     const savedText = localStorage.getItem('taskExtractorText');
     if (savedText) setText(savedText);
   }, []);
+const user= auth.currentUser;
+
+ useEffect(() => {
+    const hasVisited = localStorage.getItem("taskforge_guest_login");
+    if (!hasVisited) {
+      setShowGuestLogin(true);
+    }
+  }, [user]);
 
   // Save text to localStorage
   useEffect(() => {
@@ -19,6 +74,25 @@ export default function Hero({ onGenerate, isLoading}) {
       localStorage.setItem('taskExtractorText', text);
     }
   }, [text]);
+  
+  const handleGuestLogin = async () => {
+    setLoading(true);
+    try {
+      const result = await signInAsGuest();
+      await saveGuestUser();
+      localStorage.setItem("taskforge_guest_login", "true");
+      setShowGuestLogin(false);
+      toast.success("Logged in as Guest successfully!");
+    } catch (err) {
+      console.error("Guest login error", err);
+      toast.error("Failed to login as Guest",{
+        role: "alert",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   const handleGenerate = () => {
     
@@ -35,9 +109,24 @@ export default function Hero({ onGenerate, isLoading}) {
 - Order new office supplies (pens, notebooks)`);
     setShowExample(false);
   };
+ const location = useLocation();
 
+  useEffect(() => {
+    const target = sessionStorage.getItem("scrollTarget");
+    if (target) {
+      sessionStorage.removeItem("scrollTarget"); // prevent repeated scrolling
+      setTimeout(() => {
+        const el = document.getElementById(target);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 300); // wait for DOM to fully render
+    }
+  }, []);
   return (
  <section id="hero" aria-label="AI Task Extraction Tool" className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 flex flex-col items-center justify-center px-4 py-16 sm:px-6 lg:px-8 overflow-hidden relative">
+  
+  <Guest  saveGuestUser={saveGuestUser} handleGuestLogin={handleGuestLogin} loading={loading} showGuestLogin={showGuestLogin} setLoading={setLoading} setShowGuestLogin={setShowGuestLogin}/>
       {/* Decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Floating abstract shapes */}
@@ -106,7 +195,7 @@ export default function Hero({ onGenerate, isLoading}) {
               className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-5 py-3.5 text-lg font-semibold text-white shadow-md hover:shadow-lg cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 group"
             >
               {isLoading ? (
-                'Processing...'
+                `Processing... ${progress}%`
               ) : (
                 <>
                   Extract Tasks
