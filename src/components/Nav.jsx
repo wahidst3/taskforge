@@ -58,22 +58,21 @@ export default function GlassNavbar() {
     }
     // Otherwise, let the Link navigate to home page normally
   }}
-            className="flex min-[375px]:max-[640px]:hidden items-center gap-1.5 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 px-5 py-2 text-white font-medium hover:shadow-lg transition-all hover:scale-[1.02]"
+            className="flex min-[250px]:max-[640px]:hidden items-center gap-1.5 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 px-5 py-2 text-white font-medium hover:shadow-lg transition-all hover:scale-[1.02]"
           >
             Get Started
             <ArrowRightIcon className="w-4 h-4" />
           </Link>
           <div className='flex items-center gap-2 text-slate-400 hover:text-white transition-colors bg-gradient-to-br from-indigo-600/80 to-pink-500/80 rounded-full p-2 cursor-pointer'>
-          <User2Icon className='text-white font-bold min-[375px]:max-[640px]:hidden'  onClick={()=>setIsOpen(!isOpen)}/>
-            <MenuIcon className='text-white font-bold hidden min-[375px]:max-[640px]:block' onClick={()=>setIsOpen(!isOpen)}/>
+          <User2Icon className='text-white font-bold min-[250px]:max-[640px]:hidden'  onClick={()=>setIsOpen(!isOpen)}/>
+            <MenuIcon className='text-white font-bold hidden min-[250px]:max-[640px]:block' onClick={()=>setIsOpen(!isOpen)}/>
           </div>
           </div>
         </div>
       </div>
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute md:right-10 sm:right-7 min-[375px]:max-[640px]:right-10 min-[375px]:max-[640px]:w-24 top-16 right-28 cursor-pointer bg-white shadow-md rounded-md p-
-4 w-48">
+        <div className="absolute md:right-10 sm:right-7 min-[250px]:max-[640px]:right-10 min-[250px]:max-[640px]:w-24 top-16 right-28 cursor-pointer bg-white shadow-md rounded-md p-4 w-48">
   
           <ul className="space-y-2">
             <li>
@@ -93,7 +92,7 @@ export default function GlassNavbar() {
     }
     // Otherwise, let the Link navigate to home page normally
   }}
-              className="hidden min-[375px]:max-[640px]:block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
+              className="hidden min-[250px]:max-[640px]:block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
             >
               Home
               </Link>
