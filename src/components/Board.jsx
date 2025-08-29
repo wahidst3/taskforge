@@ -36,10 +36,10 @@ const [filterPop, setFilterPopup] = useState(false);
   const list = lists?.find(l => String(l.id) === String(listId)) || null;
 
   //task delete function
-const deleteTask = (listId, taskId) => {
+const deleteTask = ( taskId) => {
   setLists(prevLists => {
     return prevLists.map(l => {
-      if (String(l.id) === String(listId)) {
+      if (String(l.id) === String(list.id)) {
         return { 
           ...l, 
           tasks: l.tasks.filter(task => task.id !== taskId) 
@@ -417,7 +417,7 @@ function TaskCard({ task, index, deleteTask, editPopup, setEditPopup, openEditPo
             e.preventDefault();
             e.stopPropagation();
             if (window.confirm('Are you sure you want to delete this Task?')) {
-              deleteTask(list.id,task.id);
+              deleteTask(task.id);
             }
           }}
         >
