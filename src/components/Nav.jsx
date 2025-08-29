@@ -72,7 +72,7 @@ export default function GlassNavbar() {
       </div>
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute md:right-10 sm:right-7 min-[250px]:max-[640px]:right-10 min-[250px]:max-[640px]:w-24 top-16 right-28 cursor-pointer bg-white shadow-md rounded-md p-4 w-48">
+        <div className="absolute md:right-36 sm:right-7 min-[250px]:max-[640px]:right-10 min-[250px]:max-[640px]:w-24 top-16  cursor-pointer bg-white shadow-md rounded-md p-4 w-48">
   
           <ul className="space-y-2">
             <li>

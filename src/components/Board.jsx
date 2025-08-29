@@ -26,8 +26,13 @@ export default function BoardPage() {
   const [newTags, setNewTags] = useState('');
   const [editPopup, setEditPopup] = useState(false);
   const [editingTaskId, setEditingTaskId] = useState(null);
+  const [filterText, setFilterText] = useState('');
+const [filterPriority, setFilterPriority] = useState('');
+const [filterTag, setFilterTag] = useState('');
+const [filterDueDate, setFilterDueDate] = useState('');
+const [filterPop, setFilterPopup] = useState(false);
 
-  // Find the current list
+  
   const list = lists?.find(l => String(l.id) === String(listId)) || null;
 
   //task delete function
@@ -180,6 +185,9 @@ const deleteTask = (listId, taskId) => {
         <Navbar />
       </div>
       <main className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 relative">
+ 
+
+
         <ToastContainer />
         {editPopup && (
           <div className="bg-white border border-gray-300 p-4 rounded-xl shadow-lg w-96 space-y-3 absolute top-40 left-1/2 transform -translate-x-1/2 z-50">
@@ -248,6 +256,17 @@ const deleteTask = (listId, taskId) => {
                 editPopup={editPopup}
                 setEditPopup={setEditPopup}
                 openEditPopup={openEditPopup}
+                filterText={filterText}
+                filterPriority={filterPriority}
+                filterTag={filterTag}
+                filterDueDate={filterDueDate}
+                filterPop={filterPop}
+                setFilterPopup={setFilterPopup}
+                setFilterDueDate={setFilterDueDate}
+                setFilterPriority={setFilterPriority}
+                setFilterTag={setFilterTag}
+                setFilterText={setFilterText}
+
               />
             ))}
           </div>
@@ -257,7 +276,7 @@ const deleteTask = (listId, taskId) => {
   );
 }
 
-function Column({ id, title, tasks, deleteTask, editPopup, setEditPopup, openEditPopup }) {
+function Column({ id, title, tasks, deleteTask, editPopup, setEditPopup, openEditPopup, filterText, filterPriority, filterTag, filterDueDate , filterPop, setFilterPopup, setFilterDueDate, setFilterPriority, setFilterTag, setFilterText }) {
   const color =
     title === 'To-Do' ? 'border-sky-300' :
     title === 'In-Progress' ? 'border-yellow-300' :
@@ -265,13 +284,73 @@ function Column({ id, title, tasks, deleteTask, editPopup, setEditPopup, openEdi
 
   return (
     <div className={`bg-white rounded-xl p-4 border-t-4 ${color} shadow-sm`}>
-      <div className="flex items-center justify-between mb-4 w-full">
+      <div className="flex items-center justify-between mb-4 w-full relative  ">
         <h1 className="font-semibold text-slate-700 mb-3 text-lg">{title}</h1>
-        <FilterIcon 
-          className="w-6 h-6 text-slate-300 cursor-pointer hover:text-slate-700 transition"
-          onClick={() => alert('Filter functionality coming soon!')}
-        />
+    <FilterIcon 
+  className={`${title === 'To-Do' ? "block " : "hidden "} w-6 h-6 text-slate-700 cursor-pointer hover:text-slate-500 transition`}
+  onClick={() => setFilterPopup(prev => !prev)}
+/>
+
+
       </div>
+      { filterPop && title === 'To-Do' && (
+        
+<div className="absolute left-20 top-24  max-[500px]:left-10  max-w-[600px]-left-10 z-50 w-80 bg-white shadow-xl rounded-2xl p-5 border border-slate-200">
+  <h2 className="text-lg font-semibold text-slate-700 mb-3"> Filters</h2>
+
+  {/* Title search */}
+  <input 
+    type="text" 
+    placeholder="Search by title..." 
+    value={filterText}
+    onChange={(e) => setFilterText(e.target.value)}
+    className="w-full border border-slate-300 rounded-xl px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+  />
+
+  {/* Priority filter */}
+  <select 
+    value={filterPriority} 
+    onChange={(e) => setFilterPriority(e.target.value)}
+    className="w-full border border-slate-300 rounded-xl px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+  >
+    <option value="">All priorities</option>
+    <option value="low">Low</option>
+    <option value="medium">Medium</option>
+    <option value="high">High</option>
+  </select>
+
+  {/* Tag filter */}
+  <input 
+    type="text" 
+    placeholder="Search by tag..." 
+    value={filterTag}
+    onChange={(e) => setFilterTag(e.target.value)}
+    className="w-full border border-slate-300 rounded-xl px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+  />
+
+  {/* Due date filter */}
+  <input 
+    type="date" 
+    value={filterDueDate}
+    onChange={(e) => setFilterDueDate(e.target.value)}
+    className="w-full border border-slate-300 rounded-xl px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+  />
+
+  {/* Reset button */}
+  <button
+    onClick={() => {
+      setFilterText('');
+      setFilterPriority('');
+      setFilterTag('');
+      setFilterDueDate('');
+    }}
+    className="w-full px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium hover:opacity-90 transition"
+  >
+    Reset Filters
+  </button>
+</div>
+
+)}
       <Droppable droppableId={id}>
         {(provided) => (
           <div 
@@ -279,7 +358,16 @@ function Column({ id, title, tasks, deleteTask, editPopup, setEditPopup, openEdi
             {...provided.droppableProps}
             className="space-y-3 min-h-[100px]"
           >
-            {tasks.map((task, index) => (
+     {tasks
+  .filter(task => {
+    const matchesTitle = filterText === '' || task.title.toLowerCase().includes(filterText.toLowerCase());
+    const matchesPriority = filterPriority === '' || task.priority === filterPriority;
+    const matchesTag = filterTag === '' || task.tags?.some(tag => tag.toLowerCase().includes(filterTag.toLowerCase()));
+    const matchesDueDate = filterDueDate === '' || (task.dueDate && task.dueDate === filterDueDate);
+
+    return matchesTitle && matchesPriority && matchesTag && matchesDueDate;
+  })
+  .map((task, index) => (
               <TaskCard 
                 key={task.id} 
                 task={task} 
